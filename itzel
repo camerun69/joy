@@ -31,6 +31,7 @@
     <script type='text/javascript'>var ue_t0 = ue_t0 || +new Date();</script>
     <!-- sp:end-feature:csm:head-open-part1 -->
     <!-- sp:feature:cs-optimization -->
+    <meta http-equiv='x-dns-prefetch-control' content='on'>
     <link rel="dns-prefetch" href="https://images-fe.ssl-images-amazon.com">
     <link rel="dns-prefetch" href="https://m.media-amazon.com">
     <link rel="dns-prefetch" href="https://completion.amazon.com">
