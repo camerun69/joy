@@ -38,7 +38,7 @@
 <meta property="og:description" content="AMARA16 merupakan informasi link situs toto 4d togel terpercaya dan bandar togel online dengan layanan bermain selama 24jam di situs togel terpercaya kalian akan dimanjakan dengan berbagai pilihan pasaran togel resmi dan terlengkap dengan hadiah besar yang bisa kalian bawa pulang setiap harinya selama bermain dalam situs togel online 24jam nonstop. " />
 <meta property="og:type" content="product" />
 <meta property="og:url" content="https://region8.dld.go.th/" />
-<meta property="og:image" content="https://hoki.sgp1.cdn.digitaloceanspaces.com/scripts/bar/img/slider/slider-3-min.jpg" />
+<meta property="og:image" content="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9MsvubktKXl1I3TRYQiZON6uad8W4fPlJTiiwpMMYPizHdnj9Kd6F92vIL5qsYQi4rxDgDf0ebCsBvZWJj9ad5PlNnW8ju2k-g7j0p_kS81pkNHV8z689AF-f4OJjRnVVinkv3QDuKMaFI91yM7d1BrGq7pJGI6ZO3gnKN84-tQYxF5PAGRqEoqCHvvZ-/s1600/amara16-situs-game-online-aman.jpg" />
 <meta property="product:price:amount" content="5.20" /><meta property="product:price:currency" content="USD" />
 <link rel="shortcut icon" href="https://pub-4a5085e4b29d4062ac1a08400133b56c.r2.dev/brand/GOODTOGEL/logo-goodtogel.png" />
 <link rel="icon" href="https://pub-4a5085e4b29d4062ac1a08400133b56c.r2.dev/brand/GOODTOGEL/logo-goodtogel.png" type="image/png" sizes="32x32" />
@@ -51,7 +51,7 @@
 <link rel="preconnect" href="//i.etsystatic.com" />
 <link rel="preconnect" href="//v.etsystatic.com" />
 <link rel="preconnect" href="//v.etsystatic.com" crossorigin="anonymous" />
-<link rel="preload" as="image" imagesrcset="https://hoki.sgp1.cdn.digitaloceanspaces.com/scripts/bar/img/slider/slider-3-min.jpg" fetchpriority="high" />
+<link rel="preload" as="image" imagesrcset="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9MsvubktKXl1I3TRYQiZON6uad8W4fPlJTiiwpMMYPizHdnj9Kd6F92vIL5qsYQi4rxDgDf0ebCsBvZWJj9ad5PlNnW8ju2k-g7j0p_kS81pkNHV8z689AF-f4OJjRnVVinkv3QDuKMaFI91yM7d1BrGq7pJGI6ZO3gnKN84-tQYxF5PAGRqEoqCHvvZ-/s1600/amara16-situs-game-online-aman.jpg" fetchpriority="high" />
 <link rel="alternate" href="https://region8.dld.go.th/" hreflang="en" />
 <link rel="alternate" href="https://region8.dld.go.th/" hreflang="en-FI" />
 <link rel="alternate" href="https://region8.dld.go.th/" hreflang="en-AU" />
@@ -197,9 +197,9 @@
       "@type": "ImageObject",
       "@context": "https://schema.org",
       "author": "SITUS TOTO",
-      "contentURL": "https://hoki.sgp1.cdn.digitaloceanspaces.com/scripts/bar/img/slider/slider-3-min.jpg",
+      "contentURL": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9MsvubktKXl1I3TRYQiZON6uad8W4fPlJTiiwpMMYPizHdnj9Kd6F92vIL5qsYQi4rxDgDf0ebCsBvZWJj9ad5PlNnW8ju2k-g7j0p_kS81pkNHV8z689AF-f4OJjRnVVinkv3QDuKMaFI91yM7d1BrGq7pJGI6ZO3gnKN84-tQYxF5PAGRqEoqCHvvZ-/s1600/amara16-situs-game-online-aman.jpg",
       "description": null,
-      "thumbnail": "https://hoki.sgp1.cdn.digitaloceanspaces.com/scripts/bar/img/slider/slider-3-min.jpg"
+      "thumbnail": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9MsvubktKXl1I3TRYQiZON6uad8W4fPlJTiiwpMMYPizHdnj9Kd6F92vIL5qsYQi4rxDgDf0ebCsBvZWJj9ad5PlNnW8ju2k-g7j0p_kS81pkNHV8z689AF-f4OJjRnVVinkv3QDuKMaFI91yM7d1BrGq7pJGI6ZO3gnKN84-tQYxF5PAGRqEoqCHvvZ-/s1600/amara16-situs-game-online-aman.jpg"
     }
   ],
   "category": "amara16 < Situs Gacor < Licensed Resmi Asia 100%",
@@ -208,7 +208,7 @@
     "@context": "https://schema.org",
     "name": "SITUS TOTO"
   },
-  "logo": "https://hoki.sgp1.cdn.digitaloceanspaces.com/scripts/bar/img/slider/slider-3-min.jpg",
+  "logo": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9MsvubktKXl1I3TRYQiZON6uad8W4fPlJTiiwpMMYPizHdnj9Kd6F92vIL5qsYQi4rxDgDf0ebCsBvZWJj9ad5PlNnW8ju2k-g7j0p_kS81pkNHV8z689AF-f4OJjRnVVinkv3QDuKMaFI91yM7d1BrGq7pJGI6ZO3gnKN84-tQYxF5PAGRqEoqCHvvZ-/s1600/amara16-situs-game-online-aman.jpg",
   "aggregateRating": {
     "@type": "AggregateRating",
     "ratingValue": "5.0",
@@ -1093,8 +1093,8 @@ if (clientloggerIsEnabled) {
                             alt="SITUS TOTO"
                             data-carousel-first-image
                             data-perf-group="main-product-image"
-                            src="https://hoki.sgp1.cdn.digitaloceanspaces.com/scripts/bar/img/slider/slider-3-min.jpg"
-                            srcset="https://hoki.sgp1.cdn.digitaloceanspaces.com/scripts/bar/img/slider/slider-3-min.jpg"
+                            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9MsvubktKXl1I3TRYQiZON6uad8W4fPlJTiiwpMMYPizHdnj9Kd6F92vIL5qsYQi4rxDgDf0ebCsBvZWJj9ad5PlNnW8ju2k-g7j0p_kS81pkNHV8z689AF-f4OJjRnVVinkv3QDuKMaFI91yM7d1BrGq7pJGI6ZO3gnKN84-tQYxF5PAGRqEoqCHvvZ-/s1600/amara16-situs-game-online-aman.jpg"
+                            srcset="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9MsvubktKXl1I3TRYQiZON6uad8W4fPlJTiiwpMMYPizHdnj9Kd6F92vIL5qsYQi4rxDgDf0ebCsBvZWJj9ad5PlNnW8ju2k-g7j0p_kS81pkNHV8z689AF-f4OJjRnVVinkv3QDuKMaFI91yM7d1BrGq7pJGI6ZO3gnKN84-tQYxF5PAGRqEoqCHvvZ-/s1600/amara16-situs-game-online-aman.jpg"
                             fetchpriority="high"
                             data-original-image-width="3000"
                             data-src-zoom-image="https://i.etsystatic.com/54267703/r/il/f18987/6256816164/il_fullxfull.6256816164_26ap.jpg"
